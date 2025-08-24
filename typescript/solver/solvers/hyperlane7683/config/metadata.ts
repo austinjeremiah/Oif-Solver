@@ -74,11 +74,11 @@ const metadata: Hyperlane7683Metadata = {
         args: {
           "11155420": {
             "0x5f94BC7Fb4A2779fef010F96b496cD36A909E818": BigInt(50e18),
-            [AddressZero]: BigInt(5e15),
+            [AddressZero]: BigInt(1e14),
           },
           "84532": {
             "0x5f94BC7Fb4A2779fef010F96b496cD36A909E818": BigInt(50e18),
-            [AddressZero]: BigInt(5e15),
+            [AddressZero]: BigInt(1e14),
           },
           "421614": {
             "0xaf88d065e77c8cC2239327C5EDb3A432268e5831": null,
@@ -86,7 +86,7 @@ const metadata: Hyperlane7683Metadata = {
           },
           "11155111": {
             "0x5f94BC7Fb4A2779fef010F96b496cD36A909E818": BigInt(5e18),
-            [AddressZero]: BigInt(5e10),
+            [AddressZero]: BigInt(1e14),
           },
         },
       },
@@ -100,3 +100,4 @@ const metadata: Hyperlane7683Metadata = {
 Hyperlane7683MetadataSchema.parse(metadata);
 
 export default metadata;
+0x48fc5f649dc3e58249c2b5c8a35666e03ab8502b90594e4ccd847fab4a94fa0a
