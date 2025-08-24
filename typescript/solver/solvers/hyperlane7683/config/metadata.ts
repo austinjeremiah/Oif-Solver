@@ -66,6 +66,19 @@ const metadata: Hyperlane7683Metadata = {
       pollInterval: 1000,
       confirmationBlocks: 2,
     },
+    // ADD YOUR NEW CHAINS HERE
+    {
+      address: "0xA6665B1a40EEdBd7BD178DDB9966E9e61662aa00", // Rari input settler address
+      chainName: "rari",
+      pollInterval: 1000,
+      confirmationBlocks: 1, // Based on min_confirmations in TOML
+    },
+    {
+      address: "0x9D480daA8019F2e6086067530fBe56009f8BA5ae", // AppChain output settler address
+      chainName: "appchain", 
+      pollInterval: 1000,
+      confirmationBlocks: 1,
+    },
   ],
   customRules: {
     rules: [
@@ -88,6 +101,15 @@ const metadata: Hyperlane7683Metadata = {
             "0x5f94BC7Fb4A2779fef010F96b496cD36A909E818": BigInt(5e18),
             [AddressZero]: BigInt(1e14),
           },
+          // ADD CUSTOM RULES FOR YOUR NEW CHAINS
+          "1918988905": { // Rari chain ID
+            "0xF56B17DC903A3be90BE93A9668cA09D945468fE9": BigInt(1e6), // RARI USDC (6 decimals)
+            [AddressZero]: BigInt(1e14), // Minimum ETH amount
+          },
+          "4661": { // AppChain chain ID  
+            "0xc25232BF077c941A34588718EB03840FcB7A4a88": BigInt(1e6), // APPCHAIN USDC (6 decimals)
+            [AddressZero]: BigInt(1e14), // Minimum ETH amount
+          },
         },
       },
       {
@@ -100,4 +122,3 @@ const metadata: Hyperlane7683Metadata = {
 Hyperlane7683MetadataSchema.parse(metadata);
 
 export default metadata;
-0x48fc5f649dc3e58249c2b5c8a35666e03ab8502b90594e4ccd847fab4a94fa0a

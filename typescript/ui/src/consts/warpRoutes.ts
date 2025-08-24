@@ -4,10 +4,16 @@ import { zeroAddress } from 'viem';
 const ROUTER = '0xf614c6bF94b022E16BEF7dBecF7614FFD2b201d3';
 const ITT = '0x5f94BC7Fb4A2779fef010F96b496cD36A909E818';
 
+// From your TOML config
+const RARI_USDC = '0xF56B17DC903A3be90BE93A9668cA09D945468fE9';
+const APPCHAIN_USDC = '0xc25232BF077c941A34588718EB03840FcB7A4a88';
+const RARI_INPUT_SETTLER = '0xA6665B1a40EEdBd7BD178DDB9966E9e61662aa00';
+const APPCHAIN_OUTPUT_SETTLER = '0x9D480daA8019F2e6086067530fBe56009f8BA5ae';
+
 const NETWORK_SEPARATOR = '101010';
 
 export const TOP_MAX = {
-  'bsesepolia': {
+  'basesepolia': {
     [ITT]: 100e18,
     [zeroAddress]: 1e16,
   },
@@ -23,6 +29,15 @@ export const TOP_MAX = {
     [ITT]: 100e18,
     [zeroAddress]: 1e16,
   },
+  // Add limits for new chains
+  'rari': {
+    [RARI_USDC]: 100e6, // USDC has 6 decimals
+    [zeroAddress]: 1e16,
+  },
+  'appchain': {
+    [APPCHAIN_USDC]: 100e6, // USDC has 6 decimals
+    [zeroAddress]: 1e16,
+  },
 }
 
 // A list of Warp Route token configs
@@ -30,6 +45,7 @@ export const TOP_MAX = {
 // The input here is typically the output of the Hyperlane CLI warp deploy command
 export const warpRouteConfigs: WarpCoreConfig = {
   tokens: [
+    // Existing ITT token configurations
     {
       addressOrDenom: ITT,
       chainName: 'optimismsepolia',
@@ -118,6 +134,8 @@ export const warpRouteConfigs: WarpCoreConfig = {
       symbol: 'ITT',
       protocol: 'ethereum',
     },
+
+    // ETH configurations for existing chains
     {
       addressOrDenom: zeroAddress,
       chainName: 'optimismsepolia',
@@ -197,6 +215,78 @@ export const warpRouteConfigs: WarpCoreConfig = {
         },
         {
           token: 'ethereum|basesepolia|' + zeroAddress,
+        },
+      ],
+      decimals: 18,
+      logoURI: '/deployments/warp_routes/ETH/logo.svg',
+      name: 'ETH',
+      standard: 'IntentNative',
+      symbol: 'ETH',
+      protocol: 'ethereum',
+    },
+
+    // NEW: Add USDC token for Rari (origin chain)
+    {
+      addressOrDenom: RARI_USDC,
+      chainName: 'rari',
+      collateralAddressOrDenom: RARI_INPUT_SETTLER,
+      connections: [
+        {
+          token: 'ethereum|appchain|' + APPCHAIN_USDC,
+        },
+      ],
+      decimals: 6,
+      logoURI: '/deployments/warp_routes/USDC/logo.svg', // You may need to add USDC logo
+      name: 'USD Coin',
+      standard: 'Intent',
+      symbol: 'USDC',
+      protocol: 'ethereum',
+    },
+
+    // NEW: Add USDC token for AppChain (destination chain)  
+    {
+      addressOrDenom: APPCHAIN_USDC,
+      chainName: 'appchain',
+      collateralAddressOrDenom: APPCHAIN_OUTPUT_SETTLER,
+      connections: [
+        {
+          token: 'ethereum|rari|' + RARI_USDC,
+        },
+      ],
+      decimals: 6,
+      logoURI: '/deployments/warp_routes/USDC/logo.svg',
+      name: 'USD Coin',
+      standard: 'Intent',
+      symbol: 'USDC',
+      protocol: 'ethereum',
+    },
+
+    // NEW: Add ETH for Rari
+    {
+      addressOrDenom: zeroAddress,
+      chainName: 'rari',
+      collateralAddressOrDenom: RARI_INPUT_SETTLER,
+      connections: [
+        {
+          token: 'ethereum|appchain|' + zeroAddress,
+        },
+      ],
+      decimals: 18,
+      logoURI: '/deployments/warp_routes/ETH/logo.svg',
+      name: 'ETH',
+      standard: 'IntentNative',
+      symbol: 'ETH',
+      protocol: 'ethereum',
+    },
+
+    // NEW: Add ETH for AppChain
+    {
+      addressOrDenom: zeroAddress,
+      chainName: 'appchain',
+      collateralAddressOrDenom: APPCHAIN_OUTPUT_SETTLER,
+      connections: [
+        {
+          token: 'ethereum|rari|' + zeroAddress,
         },
       ],
       decimals: 18,
@@ -207,7 +297,8 @@ export const warpRouteConfigs: WarpCoreConfig = {
       protocol: 'ethereum',
     },
   ],
-  // Mainnet Op Arb Base Bera Form
+  
+  // Interchain fee constants
   options: {
     interchainFeeConstants: [
       {
@@ -237,6 +328,19 @@ export const warpRouteConfigs: WarpCoreConfig = {
         ),
         destination: ['optimismsepolia', 'basesepolia', 'arbitrumsepolia'].join(NETWORK_SEPARATOR),
         addressOrDenom: ITT,
+      },
+      // NEW: Add fees for Rari <-> AppChain
+      {
+        amount: 1e14, // Adjust as needed
+        origin: 'rari',
+        destination: 'appchain',
+        addressOrDenom: zeroAddress,
+      },
+      {
+        amount: 1e14, // Adjust as needed  
+        origin: 'rari',
+        destination: 'appchain',
+        addressOrDenom: RARI_USDC,
       },
     ],
   },
