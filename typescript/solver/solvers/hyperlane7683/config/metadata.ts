@@ -66,16 +66,16 @@ const metadata: Hyperlane7683Metadata = {
       pollInterval: 1000,
       confirmationBlocks: 2,
     },
-    // ADD YOUR NEW CHAINS HERE
+   
     {
-      address: "0xA6665B1a40EEdBd7BD178DDB9966E9e61662aa00", // Rari input settler address
-      chainName: "rari",
+      address: "0x14aCe37d105aeA979632B4251b6AC357d1fAc94B", // Rari input settler address
+      chainName: "rarichaintestnet",
       pollInterval: 1000,
       confirmationBlocks: 1, // Based on min_confirmations in TOML
     },
     {
-      address: "0x9D480daA8019F2e6086067530fBe56009f8BA5ae", // AppChain output settler address
-      chainName: "appchain", 
+      address: "0x72752483218899E88A9DCA9eD96e37970117616d", // AppChain output settler address
+      chainName: "appchaintestnet", 
       pollInterval: 1000,
       confirmationBlocks: 1,
     },
